@@ -2,7 +2,9 @@ import React from 'react'
 
 const TextPage = () => {
     return (
-        <div>TextPage</div>
+        <div className='text-container'>
+            <div className='text'></div>
+        </div>
     )
 }
 

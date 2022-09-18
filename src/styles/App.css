@@ -1,1 +1,26 @@
-/*# sourceMappingURL=App.css.map */
+.home-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-container .home .input-box {
+  display: flex;
+  align-items: center;
+}
+.home-container .home .input-box input {
+  font-family: "Source Code Pro", monospace;
+  font-size: 1.5rem;
+  border: none;
+  outline: none;
+}
+.home-container .home .input-box .input-btn {
+  background: #000;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+.home-container .home .input-box .input-btn svg {
+  transform: translateY(3px);
+}/*# sourceMappingURL=App.css.map */
