@@ -20,7 +20,7 @@ const HomePage = () => {
                     username: username
                 }
                 await push(userRef, user)
-                nav('/text')
+                nav('/text-io/text')
                 setUsername('')
             } else {
                 toast.warn('Username must be 3-12 characters!', {

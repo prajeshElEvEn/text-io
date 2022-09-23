@@ -6,8 +6,8 @@ import './styles/App.css';
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/text' element={<TextPage />} />
+      <Route path='/text-io' element={<HomePage />} />
+      <Route path='/text-io/text' element={<TextPage />} />
     </Routes>
   );
 }
