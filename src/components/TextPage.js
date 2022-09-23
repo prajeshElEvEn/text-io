@@ -1,6 +1,8 @@
 import { onValue, push, ref } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
 import { db } from '../config/config'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const TextPage = () => {
 
@@ -19,7 +21,15 @@ const TextPage = () => {
             await push(messageRef, msg)
             setMessage('')
         } else {
-            alert('Please enter a message')
+            toast.warn('Please type a message!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
         }
     }
 
@@ -137,6 +147,7 @@ const TextPage = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }

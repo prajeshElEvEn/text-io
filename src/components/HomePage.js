@@ -2,6 +2,8 @@ import { push, ref } from 'firebase/database'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../config/config'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const HomePage = () => {
 
@@ -21,10 +23,26 @@ const HomePage = () => {
                 nav('/text')
                 setUsername('')
             } else {
-                alert('Username must be 3 to 12 characters long')
+                toast.warn('Username must be 3-12 characters!', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
             }
         } else {
-            alert('Please enter a username')
+            toast.warn('Please enter a username!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
         }
     }
 
@@ -38,6 +56,11 @@ const HomePage = () => {
                         onChange={(e) => {
                             setUsername(e.target.value)
                         }}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                saveUser()
+                            }
+                        }}
                     />
                     <div className='input-btn'
                         onClick={() => {
@@ -48,6 +71,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     )
 }
