@@ -3,14 +3,14 @@ import { getDatabase } from "firebase/database"
 import { getAnalytics } from "firebase/analytics"
 
 const firebaseConfig = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
+    apiKey: "AIzaSyAr0clfslEKt7BlPyZOAHt16hXaHqd_XbQ",
+    authDomain: "textbyeleven.firebaseapp.com",
     databaseURL: "https://textbyeleven-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: process.env.PROJECT_ID,
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: process.env.MEASUREMENT_ID
+    projectId: "textbyeleven",
+    storageBucket: "textbyeleven.appspot.com",
+    messagingSenderId: "137569248730",
+    appId: "1:137569248730:web:966d7d429fee98f2dc8ce3",
+    measurementId: "G-ZHH0BG11BL"
 }
 
 const app = initializeApp(firebaseConfig)

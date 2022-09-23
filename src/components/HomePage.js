@@ -1,13 +1,31 @@
+import { push, ref } from 'firebase/database'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { db } from '../config/config'
 
 const HomePage = () => {
 
     const [username, setUsername] = useState('')
     const nav = useNavigate()
 
-    const saveUser = () => {
-        nav('/text')
+    const saveUser = async () => {
+        if (username) {
+            if (username.length > 2 && username.length < 13) {
+                localStorage.clear()
+                localStorage.setItem('userName', username)
+                const userRef = ref(db, 'Users')
+                const user = {
+                    username: username
+                }
+                await push(userRef, user)
+                nav('/text')
+                setUsername('')
+            } else {
+                alert('Username must be 3 to 12 characters long')
+            }
+        } else {
+            alert('Please enter a username')
+        }
     }
 
     return (
