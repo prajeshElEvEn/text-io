@@ -60,20 +60,20 @@
   font-size: 1.2rem;
   font-weight: 600;
 }
-.text-container .text .text-box .text-chat .chat-box-container-left {
+.text-container .text .text-box .text-chat .chat-box-container-right {
   width: 100%;
   display: flex;
   justify-content: flex-end;
 }
-.text-container .text .text-box .text-chat .chat-box-container-left .chat-box {
+.text-container .text .text-box .text-chat .chat-box-container-right .chat-box {
   font-family: "Source Code Pro", monospace;
   width: 46%;
   margin-bottom: 1rem;
 }
-.text-container .text .text-box .text-chat .chat-box-container-left .chat-box .chat {
+.text-container .text .text-box .text-chat .chat-box-container-right .chat-box .chat {
   font-size: 1rem;
 }
-.text-container .text .text-box .text-chat .chat-box-container-left .chat-box .chat .chat-message {
+.text-container .text .text-box .text-chat .chat-box-container-right .chat-box .chat .chat-message {
   font-size: 1.2rem;
   font-weight: 600;
 }

@@ -1,15 +1,42 @@
+import { onValue, push, ref } from 'firebase/database'
 import React, { useEffect, useState } from 'react'
+import { db } from '../config/config'
 
 const TextPage = () => {
 
-    const [chat, setChat] = useState()
     const [message, setMessage] = useState('')
+    const [currentUser, setCurrentUser] = useState('')
+    const [chat, setChat] = useState([])
 
     const sendMessage = async () => {
-
+        if (message) {
+            const messageRef = ref(db, 'Messages')
+            const msg = {
+                message: message,
+                user: currentUser,
+                time: new Date().toLocaleTimeString()
+            }
+            await push(messageRef, msg)
+            setMessage('')
+        } else {
+            alert('Please enter a message')
+        }
     }
 
     useEffect(() => {
+        setCurrentUser(localStorage.getItem('userName'))
+        const getMessages = async () => {
+            const messageRef = ref(db, 'Messages')
+            await onValue(messageRef, (snapshot) => {
+                const data = snapshot.val()
+                let chat = []
+                for (let id in data) {
+                    chat.push({ id, ...data[id] })
+                }
+                setChat(chat)
+            })
+        }
+        getMessages()
     }, [])
 
 
@@ -18,55 +45,85 @@ const TextPage = () => {
             <div className='text'>
                 <div className='text-box'>
                     <div className='text-chat'>
-                        <div className='chat-box-container'>
-                            <div className='chat-box'>
-                                <div className='user'>
-                                    <span>from</span>
-                                    &nbsp;
-                                    @username
-                                </div>
-                                <div className='chat'>
-                                    <div className='chat-message'>
-                                        <span>&#10093;</span>
-                                        &nbsp;
-                                        <span>Message is too long so it will be truncated. And more onto the next line. but this is the last line. so it should be truncated.</span>
-                                    </div>
-                                    <div className='chat-time'>
-                                        <span>Sent @</span>
-                                        &nbsp;
-                                        12:00pm
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='chat-box-container-left'>
-                            <div className='chat-box'>
-                                <div className='user'>
-                                    <span>from</span>
-                                    &nbsp;
-                                    @username
-                                </div>
-                                <div className='chat'>
-                                    <div className='chat-message'>
-                                        <span>&#10093;</span>
-                                        &nbsp;
-                                        <span>Message is too long so it will be truncated. And more onto the next line. but this is the last line. so it should be truncated.</span>
-                                    </div>
-                                    <div className='chat-time'>
-                                        <span>Sent @</span>
-                                        &nbsp;
-                                        12:00pm
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            chat.map((msg) => {
+                                return (
+                                    msg.user === currentUser ?
+                                        <div className='chat-box-container-right'>
+                                            <div className='chat-box'>
+                                                <div className='user'>
+                                                    <span>from</span>
+                                                    &nbsp;@
+                                                    {
+                                                        msg.user
+                                                    }
+                                                </div>
+                                                <div className='chat'>
+                                                    <div className='chat-message'>
+                                                        <span>&#10093;</span>
+                                                        &nbsp;
+                                                        <span>
+                                                            {
+                                                                msg.message
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <div className='chat-time'>
+                                                        <span>Sent @</span>
+                                                        &nbsp;
+                                                        {
+                                                            msg.time
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        :
+                                        <div className='chat-box-container'>
+                                            <div className='chat-box'>
+                                                <div className='user'>
+                                                    <span>from</span>
+                                                    &nbsp;@
+                                                    {
+                                                        msg.user
+                                                    }
+                                                </div>
+                                                <div className='chat'>
+                                                    <div className='chat-message'>
+                                                        <span>&#10093;</span>
+                                                        &nbsp;
+                                                        <span>
+                                                            {
+                                                                msg.message
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                    <div className='chat-time'>
+                                                        <span>Sent @</span>
+                                                        &nbsp;
+                                                        {
+                                                            msg.time
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                )
+                            })
+                        }
                     </div>
                     <div className='text-input'>
                         <input
                             type='text'
                             placeholder='Type a message...'
+                            value={message}
                             onChange={(e) => {
                                 setMessage(e.target.value)
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    sendMessage()
+                                }
                             }}
                         />
                         <div
