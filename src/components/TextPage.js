@@ -1,5 +1,5 @@
 import { onValue, push, ref } from 'firebase/database'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { db } from '../config/config'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -9,6 +9,8 @@ const TextPage = () => {
     const [message, setMessage] = useState('')
     const [currentUser, setCurrentUser] = useState('')
     const [chat, setChat] = useState([])
+
+    const msgPing = useRef(null)
 
     const sendMessage = async () => {
         if (message) {
@@ -34,6 +36,15 @@ const TextPage = () => {
     }
 
     useEffect(() => {
+        if (msgPing) {
+            msgPing.current.addEventListener('DOMNodeInserted', event => {
+                const { currentTarget: target } = event;
+                target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+            });
+        }
+    }, [])
+
+    useEffect(() => {
         setCurrentUser(localStorage.getItem('userName'))
         const getMessages = async () => {
             const messageRef = ref(db, 'Messages')
@@ -54,7 +65,10 @@ const TextPage = () => {
         <div className='text-container'>
             <div className='text'>
                 <div className='text-box'>
-                    <div className='text-chat'>
+                    <div
+                        className='text-chat'
+                        ref={msgPing}
+                    >
                         {
                             chat.map((msg) => {
                                 return (
